@@ -15,6 +15,7 @@ different Z-coordinates can represent the same point).
 import hashlib
 import secrets
 
+from py_ecc.bls.hash_to_curve import hash_to_G2 as _hash_to_G2
 from py_ecc.optimized_bls12_381 import (
     G1 as _G1,
     G2 as _G2,
@@ -105,3 +106,19 @@ def hash_to_scalar(*parts: bytes, domain: bytes = b"posterior-security") -> int:
     """
     h = hashlib.sha256(domain + b"|" + b"|".join(parts)).digest()
     return int.from_bytes(h, "big") % ORDER
+
+
+def hash_to_g2(*parts: bytes, domain: bytes = b"posterior-security") -> tuple:
+    """Deterministically map byte strings to a G2 point with *unknown*
+    discrete log relative to G2 (a proper hash-to-curve map: RFC 9380
+    -style SSWU + cofactor clearing, via py_ecc).
+
+    Do NOT approximate this as "hash to a scalar, then multiply G2" --
+    that makes the discrete log trivially computable (it's just the
+    hash output), which breaks the binding property of anything built
+    on top of the resulting point (e.g. a Pedersen commitment's second
+    generator). Use this whenever a fresh "nothing up my sleeve"
+    generator is needed.
+    """
+    dst = b"POSTERIOR-SECURITY-" + domain + b"_XMD:SHA-256_SSWU_RO_"
+    return _hash_to_G2(b"|".join(parts), dst, hashlib.sha256)
