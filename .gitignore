@@ -1,0 +1,13 @@
+# Internal-only docs — not for team distribution via the repo
+process.md
+email-to-brian-draft.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# Benchmark outputs (regenerate locally; keep repo lean)
+bench/results/

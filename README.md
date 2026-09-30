@@ -6,7 +6,13 @@ FIT5163 Assignment 2 (Programming Option) — a reproduction/implementation proj
 
 ## Status
 
-**Planning / early implementation stage.** No application code has been written yet — this repository currently only holds project scaffolding. Detailed planning docs (scope decisions, algorithm breakdown, milestones, risk log) are maintained separately by the team and will be added here as implementation starts.
+**Planning / early implementation stage.** No application code has been written yet — this repository currently only holds project scaffolding and planning documents:
+
+- [`复现计划.md`](./复现计划.md) — detailed implementation plan (scope, algorithm breakdown, tech stack, milestones, risks)
+- [`PAPER_MAP.md`](./PAPER_MAP.md) — background reading notes on the Incognito Signature construction (not implemented, reference only)
+- [`Group5-PosteriorSecurity-研究笔记.md`](./Group5-PosteriorSecurity-研究笔记.md) — early feasibility/background research notes
+
+(A separate, internal-only progress/decision log and teaching-team correspondence draft are kept locally and are not part of this repo.)
 
 ## Scope
 
