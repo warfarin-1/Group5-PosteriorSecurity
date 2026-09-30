@@ -1,7 +1,7 @@
 # 论文精读 — Incognito Signature（§3.2 + §4.1 + 附录 D.1）
 
-> 这是 `复现计划.md` 里提到的 `docs/PAPER_MAP.md` 初稿：论文公式 ↔ 未来代码函数 的逐步对照 + 关键推导。
-> 建 repo 后移到 `docs/PAPER_MAP.md`，边写代码边更新。
+> `docs/PAPER_MAP.md` 初稿：论文公式 ↔ 未来代码函数 的逐步对照 + 关键推导。
+> 边写代码边更新。
 > 论文：ePrint 2025/855，§3.2（通用构造）、§4.1（Schnorr 实例化）、附录 D.1（π'_b 细节）。
 > 附录 D.1 有 OCR 噪声，本文的推导已重新独立验算，以本文为准。
 > **本文只覆盖 Incognito 线（Track-DL）**。Concealed 线（§5.3 Boneh-Boyen + Groth-Sahai，§6 组合）的对应精读见 `PAPER_MAP_CONCEALED.md`（待写）。

@@ -1,7 +1,8 @@
 """Correctness + tamper tests for the standard Boneh-Boyen baseline.
 
 This is the object Concealed Signature will convert, and also our
-no-privacy performance baseline (see 复现计划.md §7.3).
+no-privacy performance baseline: later benchmarks compare Concealed's
+Convert/CVerify/Decom overhead against plain Sign/Verify here.
 """
 
 from posterior.boneh_boyen import Signature, hash_message, keygen, sign, verify

@@ -6,18 +6,18 @@ FIT5163 Assignment 2 (Programming Option) — a reproduction/implementation proj
 
 ## Status
 
-**Early implementation (M1).** Planning documents:
+**Early implementation (M1).**
 
-- [`复现计划.md`](./复现计划.md) — detailed implementation plan (scope, algorithm breakdown, tech stack, milestones, risks)
 - [`PAPER_MAP.md`](./PAPER_MAP.md) — background reading notes on the Incognito Signature construction (not implemented, reference only)
 
-(A separate, internal-only progress/decision log and teaching-team correspondence draft are kept locally and are not part of this repo.)
+(Team-internal planning/progress documents, not part of the final submission, are kept elsewhere and are not referenced from this file.)
 
 Implemented so far:
-- `src/posterior/pairing.py` — thin wrapper over `py_ecc`'s BLS12-381 backend (group ops, pairing, scalar/hash-to-scalar helpers), with bilinearity/identity tests
+- `src/posterior/pairing.py` — thin wrapper over `py_ecc`'s BLS12-381 backend (group ops, pairing, scalar/hash-to-scalar/hash-to-G2 helpers), with bilinearity/identity tests
 - `src/posterior/boneh_boyen.py` — standard Boneh-Boyen sign/verify (§5.3's base scheme; also our no-privacy performance baseline), with correctness + tamper tests
+- `src/posterior/commit_g2.py` — Pedersen-in-G2 commitment (`C = g2^m . h2^t`), with a properly derived "nothing up my sleeve" `h2`, and binding/hiding sanity tests
 
-Not started yet: commitment (`commit_g2.py`), the ZK proof for the target pairing-product equation (`zk_proof.py` — library vs. hand-rolled Sigma-protocol still to be decided), `concealed.py` assembly, demo, benchmarks.
+Not started yet: the ZK proof for the target pairing-product equation (`zk_proof.py` — library vs. hand-rolled Sigma-protocol still to be decided), `concealed.py` assembly, demo, benchmarks.
 
 ## Scope
 
