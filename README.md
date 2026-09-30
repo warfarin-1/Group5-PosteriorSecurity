@@ -29,7 +29,7 @@ docs/                # paper-to-code mapping, ambiguity/decision notes
 
 ## Tech stack (planned)
 
-- Python 3.11+
+- Python 3.9+
 - `py_ecc` (BLS12-381 pairing operations)
 - `pytest` for testing, `matplotlib` for benchmark plots
 
