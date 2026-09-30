@@ -6,12 +6,18 @@ FIT5163 Assignment 2 (Programming Option) — a reproduction/implementation proj
 
 ## Status
 
-**Planning / early implementation stage.** No application code has been written yet — this repository currently only holds project scaffolding and planning documents:
+**Early implementation (M1).** Planning documents:
 
 - [`复现计划.md`](./复现计划.md) — detailed implementation plan (scope, algorithm breakdown, tech stack, milestones, risks)
 - [`PAPER_MAP.md`](./PAPER_MAP.md) — background reading notes on the Incognito Signature construction (not implemented, reference only)
 
 (A separate, internal-only progress/decision log and teaching-team correspondence draft are kept locally and are not part of this repo.)
+
+Implemented so far:
+- `src/posterior/pairing.py` — thin wrapper over `py_ecc`'s BLS12-381 backend (group ops, pairing, scalar/hash-to-scalar helpers), with bilinearity/identity tests
+- `src/posterior/boneh_boyen.py` — standard Boneh-Boyen sign/verify (§5.3's base scheme; also our no-privacy performance baseline), with correctness + tamper tests
+
+Not started yet: commitment (`commit_g2.py`), the ZK proof for the target pairing-product equation (`zk_proof.py` — library vs. hand-rolled Sigma-protocol still to be decided), `concealed.py` assembly, demo, benchmarks.
 
 ## Scope
 
