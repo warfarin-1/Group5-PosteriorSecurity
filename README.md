@@ -16,8 +16,10 @@ Implemented so far:
 - `src/posterior/pairing.py` — thin wrapper over `py_ecc`'s BLS12-381 backend (group ops, pairing, scalar/hash-to-scalar/hash-to-G2 helpers), with bilinearity/identity tests
 - `src/posterior/boneh_boyen.py` — standard Boneh-Boyen sign/verify (§5.3's base scheme; also our no-privacy performance baseline), with correctness + tamper tests
 - `src/posterior/commit_g2.py` — Pedersen-in-G2 commitment (`C = g2^m . h2^t`), with a properly derived "nothing up my sleeve" `h2`, and binding/hiding sanity tests
+- `src/posterior/gs.py` — Groth-Sahai proofs for pairing-product equations over BLS12-381 (SXDH), following Escala-Groth (PKC 2014), with a batched verifier
+- `src/posterior/zk_proof.py` — zero-knowledge proof of knowledge for the concealed Boneh-Boyen relation, built on `gs.py` (the exponents `t`, `r` are encoded as group elements tied to fixed public bases by two linear equations), with completeness, tampering and soundness tests
 
-Not started yet: the ZK proof for the target pairing-product equation (`zk_proof.py` — library vs. hand-rolled Sigma-protocol still to be decided), `concealed.py` assembly, demo, benchmarks.
+Not started yet: `concealed.py` assembly, demo, benchmarks.
 
 ## Scope
 
