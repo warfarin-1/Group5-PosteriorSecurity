@@ -16,17 +16,26 @@ import hashlib
 import secrets
 
 from py_ecc.bls.hash_to_curve import hash_to_G2 as _hash_to_G2
+from py_ecc.fields import optimized_bls12_381_FQ12 as _FQ12
 from py_ecc.optimized_bls12_381 import (
     G1 as _G1,
     G2 as _G2,
     Z1 as _Z1,
     Z2 as _Z2,
     add as _add,
+    b as _b,
+    b2 as _b2,
     curve_order as _curve_order,
     eq as _eq,
+    is_inf as _is_inf,
+    is_on_curve as _is_on_curve,
     multiply as _multiply,
     neg as _neg,
     pairing as _pairing,
+)
+from py_ecc.optimized_bls12_381.optimized_pairing import (
+    final_exponentiate as _final_exponentiate,
+    miller_loop as _miller_loop,
 )
 
 # --- Public constants -------------------------------------------------
@@ -76,6 +85,39 @@ def neg(point):
 def points_equal(p, q) -> bool:
     """Equality for G1/G2 points. Always use this instead of `==`."""
     return _eq(p, q)
+
+
+def is_valid_g1(point) -> bool:
+    """True iff `point` is on the G1 curve and in the prime-order subgroup.
+
+    Must be applied to any G1 element that came from an untrusted party
+    (e.g. a proof) before pairing it: BLS12-381 G1 has a non-trivial
+    cofactor, so an on-curve point can lie outside the order-p subgroup.
+    """
+    return _is_on_curve(point, _b) and _is_inf(_multiply(point, _curve_order))
+
+
+def is_valid_g2(point) -> bool:
+    """G2 analogue of `is_valid_g1`."""
+    return _is_on_curve(point, _b2) and _is_inf(_multiply(point, _curve_order))
+
+
+def multi_pairing_is_one(pairs) -> bool:
+    """Check prod_i e(P_i, Q_i) == 1 for `pairs` = [(P_i in G1, Q_i in G2)].
+
+    Runs all Miller loops and a single final exponentiation, which is
+    several times cheaper than evaluating each pairing separately. Pairs
+    containing the identity are skipped (they contribute 1).
+    """
+    acc = None
+    for p1, q2 in pairs:
+        if _is_inf(p1) or _is_inf(q2):
+            continue
+        m = _miller_loop(q2, p1, final_exponentiate=False)
+        acc = m if acc is None else acc * m
+    if acc is None:
+        return True
+    return _final_exponentiate(acc) == _FQ12.one()
 
 
 def pairing(g2_point, g1_point):
