@@ -1,0 +1,26 @@
+{
+  "scenario": "wallet -> bank -> public verifier -> authorized reveal",
+  "public_verifier_inputs": [
+    "concealed_signature",
+    "verification_key",
+    "public_parameters"
+  ],
+  "concealed_signature_bytes": 2504,
+  "public_parameters_bytes": 680,
+  "public_signature_sha256": "46c42ea16f5e3e49974c3da9f1867ceff29599b1d78950cf6616d3cd296d919a",
+  "revealed_amount": "123.45",
+  "checks": {
+    "cverify": true,
+    "decom": true,
+    "wrong_amount_rejected": true,
+    "wrong_opening_rejected": true,
+    "tampered_commitment_rejected": true,
+    "invalid_original_rejected": true
+  },
+  "limitations": [
+    "same-process illustration",
+    "no range or balance proof",
+    "no settlement or replay protocol",
+    "trusted setup required"
+  ]
+}

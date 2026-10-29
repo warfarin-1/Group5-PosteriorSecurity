@@ -6,7 +6,7 @@ FIT5163 Assignment 2 (Programming Option) — a reproduction/implementation proj
 
 ## Status
 
-**Concealed implementation and Part B/C evaluation tooling are available.**
+**Concealed implementation, evaluation tooling and CBDC demo are available.**
 
 - [`PAPER_MAP.md`](./PAPER_MAP.md) — background reading notes on the Incognito Signature construction (not implemented, reference only)
 
@@ -25,9 +25,14 @@ Implemented so far:
 - [`docs/PART_B.md`](docs/PART_B.md), [`docs/PART_C.md`](docs/PART_C.md) — interface and evaluation notes
 - [`docs/PAPER_MAP_CONCEALED.md`](docs/PAPER_MAP_CONCEALED.md), [`docs/AMBIGUITIES.md`](docs/AMBIGUITIES.md) — actual construction-to-code mapping and engineering decisions
 
+- `demo/cbdc_concealed.py` — wallet/bank/verifier/reveal illustration with rejection paths
+- [`docs/PART_D.md`](docs/PART_D.md) — verified demo, external reference experiment and packaging notes
+- `tools/build_submission.py` — allowlisted source ZIP and SHA-256 manifest
+- `presentation/` and `submission/` — editable slide skeleton, demo runbook, Q&A, cover worksheet and final checklist
+
 Remaining team work includes A's GS simulator/security review and optional
-optimization, and D's demo, final packaging and presentation. Tests provide
-engineering evidence, not a full cryptographic security proof.
+optimization, and final report/coversheet/slides review, rehearsal and upload.
+Tests provide engineering evidence, not a full cryptographic security proof.
 
 ## Scope
 
@@ -37,7 +42,7 @@ The paper has two main contributions: **Incognito Signature** (posterior anonymi
 - **Incognito Signature is not re-implemented.** The tutor has already published an open-source Rust implementation (`incognito-sig/incognito`). We treat it purely as background reading and, where useful, a source of reference benchmark numbers — properly cited, not copied. No Rust code is written or maintained in this repository.
 - **The combined "Incognito Concealed" construction (paper §6) is out of scope**, since it would require an Incognito implementation to combine with.
 
-## Planned repository layout
+## Repository layout
 
 ```
 src/posterior/       # pairing group wrapper, Boneh-Boyen sign/verify,
@@ -46,6 +51,9 @@ demo/                # end-to-end demo scenario
 tests/                # correctness, security-property, and edge-case tests
 bench/                # performance benchmarks and plots
 docs/                # paper-to-code mapping, ambiguity/decision notes
+tools/               # source packaging and external result collection
+presentation/        # slide skeleton, demo runbook and Q&A preparation
+submission/          # cover fields and review checklist
 ```
 
 ## Run and reproduce
@@ -54,6 +62,7 @@ From the repository root in PowerShell, using the existing project environment:
 
 ```powershell
 .\.venv\python.exe -m pip install -r requirements.txt
+.\.venv\python.exe demo/cbdc_concealed.py --amount 123.45
 .\.venv\python.exe -m pytest -q -p no:cacheprovider
 .\.venv\python.exe bench/run_bench_concealed.py --repeats 20 --warmup 1 --output bench/results/local
 .\.venv\python.exe bench/plot_results.py --input bench/results/local
@@ -65,6 +74,12 @@ For a fresh environment, create a Python 3.9+ virtual environment first
 `.venv\python.exe`. Run scripts from the repository root; benchmark scripts
 add `src` themselves. See Part B's note for application imports and usage.
 
+The demo prints CVerify PASS without requiring the amount/opening, then
+reveals `123.45`, prints Decom PASS and confirms four rejection scenarios.
+It uses fresh randomness, so public hashes vary. There is no cryptographic
+range/balance proof, payment settlement or replay protection. See the
+[demo runbook](presentation/DEMO_RUNBOOK.md) for the recorded-output fallback.
+
 Expected results: pytest reports passing tests; the benchmark writes
 `raw.csv`, `summary.csv`, `metadata.json`; plotting adds PNG/SVG timing
 and size charts. A full benchmark can take several minutes. New generated
@@ -72,6 +87,22 @@ directories under `bench/results/` are ignored by Git; the measured
 `bench/results/2026-10-30/` snapshot is explicitly tracked for Part C.
 Preserve the intended result directory when preparing the final evaluation
 archive. Never include `.venv` or private keys.
+
+## Source delivery and external reference data
+
+```powershell
+.\.venv\python.exe tools/build_submission.py
+```
+
+This writes `../deliverables/Group5-PosteriorSecurity-source.zip`, verifies
+archive contents against its SHA-256 manifest, and excludes environments,
+toolchains, caches, Git metadata and internal notes. It is a review copy:
+complete the [submission checklist](submission/CHECKLIST.md) and official
+CoverSheet before any upload. Member information remains TO FILL by request.
+
+Rust is not needed for this Python project. The separate official Incognito
+reference benchmark was run unchanged; its source revision, raw measurements
+and limitations are in [INCOGNITO_REFERENCE.md](docs/INCOGNITO_REFERENCE.md).
 
 ## Tech stack
 
@@ -83,4 +114,4 @@ archive. Never include `.venv` or private keys.
 
 - Incognito Signature: not implemented here; background understanding and any cited benchmark figures are drawn from the tutor/author's public repository, credited explicitly wherever referenced.
 - AI-assisted work (planning, code, or documentation) is disclosed per unit policy in the project's provenance notes.
-- Part B and C AI assistance is disclosed in their integration/evaluation notes; final submission provenance and packaging are maintained by the team.
+- Parts B/C/D AI assistance and dependencies are disclosed in [PROVENANCE.md](docs/PROVENANCE.md); the team must review the final submission and complete personal declarations.
