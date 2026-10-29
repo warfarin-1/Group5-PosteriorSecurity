@@ -1,0 +1,25 @@
+{
+  "recorded_utc": "2026-10-29T16:04:52.178174+00:00",
+  "python": "3.9.23 | packaged by conda-forge | (main, Jun  4 2025, 17:49:16) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 170 Stepping 4, GenuineIntel",
+  "py_ecc": "8.0.0",
+  "git_head": "4157a1c650f16a251d33b69dd81eec4107a07f09",
+  "git_dirty": true,
+  "repeats": 20,
+  "warmup": 1,
+  "sizes_bytes": {
+    "bb_signature_payload": 80,
+    "proof": 2404,
+    "concealed_signature": 2504,
+    "crs": 580,
+    "public_parameters": 680,
+    "opening_scalar": 32
+  },
+  "quantiles": "linear interpolation at (n-1)*q",
+  "timing_clock": "perf_counter_ns",
+  "benchmark_script_sha256": "780a0bbedd00658eecfa8406c3bf090bd5e5c71a0fc148b87bf1ca08ed9b942e",
+  "scope": "sequential single-process public APIs; setup/keygen/encoding excluded",
+  "comparisons": "convert+cverify excludes original signing; full_concealed includes signing and opening",
+  "bb_size": "48-byte compressed G1 + 32-byte scalar payload; no BB wire API or tag"
+}

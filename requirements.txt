@@ -1,4 +1,4 @@
 py-ecc==8.0.0
 pytest==8.4.2
 pytest-benchmark==5.2.3
-# matplotlib will be added once bench/plot_results.py is written
+matplotlib==3.9.4
