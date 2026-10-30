@@ -1,0 +1,6 @@
+[1] Wallet signs an amount; bank receives the signature and amount.
+[2] Bank converts it; verifier receives CS + vk + shared parameters.
+[3] CVerify: PASS; amount/opening not required. CS=2504 B
+[4] Authorized reveal: amount=123.45; Decom: PASS
+[5] Wrong amount/opening, changed commitment and invalid BB signature: REJECTED
+No range/balance proof or payment settlement is implemented.
