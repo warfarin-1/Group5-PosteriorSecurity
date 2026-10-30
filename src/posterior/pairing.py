@@ -15,6 +15,11 @@ different Z-coordinates can represent the same point).
 import hashlib
 import secrets
 
+from py_ecc.bls.point_compression import (
+    compress_G1 as _compress_G1, compress_G2 as _compress_G2,
+    decompress_G1 as _decompress_G1, decompress_G2 as _decompress_G2,
+)
+
 from py_ecc.bls.hash_to_curve import hash_to_G2 as _hash_to_G2
 from py_ecc.fields import optimized_bls12_381_FQ12 as _FQ12
 from py_ecc.optimized_bls12_381 import (
@@ -54,6 +59,40 @@ ZERO_G2 = _Z2
 
 ORDER = _curve_order
 """Order p of the scalar field Zp (also the order of G1, G2, GT)."""
+
+
+def encode_g1(point) -> bytes:
+    """Canonical 48-byte compressed point, checked for subgroup membership."""
+    if not is_valid_g1(point):
+        raise ValueError("invalid G1 subgroup point")
+    return int(_compress_G1(point)).to_bytes(48, "big")
+
+
+def decode_g1(data: bytes) -> tuple:
+    """Decode canonical compressed G1, including identity; reject other subgroups."""
+    if not isinstance(data, bytes) or len(data) != 48:
+        raise ValueError("G1 encoding must be exactly 48 bytes")
+    point = _decompress_G1(int.from_bytes(data, "big"))
+    if encode_g1(point) != data:
+        raise ValueError("non-canonical G1 encoding")
+    return point
+
+
+def encode_g2(point) -> bytes:
+    """Canonical 96-byte compressed point, checked for subgroup membership."""
+    if not is_valid_g2(point):
+        raise ValueError("invalid G2 subgroup point")
+    return b"".join(int(x).to_bytes(48, "big") for x in _compress_G2(point))
+
+
+def decode_g2(data: bytes) -> tuple:
+    """Decode canonical compressed G2, including identity; reject other subgroups."""
+    if not isinstance(data, bytes) or len(data) != 96:
+        raise ValueError("G2 encoding must be exactly 96 bytes")
+    point = _decompress_G2((int.from_bytes(data[:48], "big"), int.from_bytes(data[48:], "big")))
+    if encode_g2(point) != data:
+        raise ValueError("non-canonical G2 encoding")
+    return point
 
 
 # --- Group operations ---------------------------------------------------
