@@ -62,9 +62,9 @@ Shared parameters (**680 B**), vk and private opening are separate. CS is
 of CS/proof type tags included. The proof itself is 2404 B. This is an
 implementation-specific encoding comparison, not the paper's compactness claim.
 
-Result files live in `bench/results/2026-10-30/`. Although generated result
-directories are ignored by default, this dated snapshot is explicitly tracked
-for the Part C delivery, including raw samples, metadata and PNG/SVG charts.
+Result files live in `bench/results/2026-10-31/` (re-run after the Part A verifier
+optimisation; see the note below). Although generated result
+directories are ignored by default, this dated snapshot is explicitly tracked, including raw samples, metadata and PNG/SVG charts.
 
 ## Verification and measured results
 
@@ -75,31 +75,41 @@ The XML is outside the repository. B's earlier full-suite run was 106 passed;
 that unchanged suite was not rerun in this C session. `pip check`, compilation
 of source/tests/bench and `git diff --check` passed.
 
-Measured on Windows / Intel64 Family 6 Model 170, Python 3.9.23,
+Measured on Windows / Intel64 Family 6 Model 154, Python 3.9.13,
 py-ecc 8.0.0; **n=20 after one excluded warmup**, sequential execution:
 
 | Operation / workflow | Median (ms) | IQR (ms) |
 |---|---:|---:|
-| BB Sign | 8.277 | 1.992 |
-| BB Verify | 1044.327 | 58.383 |
-| Convert (including BB verification) | 3777.397 | 102.844 |
-| CVerify | 3943.954 | 191.497 |
-| Decom | 345.626 | 43.005 |
-| BB Sign + Verify | 1052.447 | 61.433 |
-| Convert + CVerify | 7716.062 | 221.777 |
-| Sign + Convert + CVerify + Decom | 8064.135 | 218.462 |
+| BB Sign | 7.968 | 0.733 |
+| BB Verify | 1041.955 | 88.482 |
+| Convert (including BB verification) | 3322.319 | 326.423 |
+| CVerify | 2315.166 | 186.104 |
+| Decom | 77.264 | 5.119 |
+| BB Sign + Verify | 1050.077 | 87.351 |
+| Convert + CVerify | 5663.227 | 446.248 |
+| Sign + Convert + CVerify + Decom | 5747.848 | 447.691 |
 
-The ratio of medians for conversion-stage cost vs BB Sign+Verify is **7.33x**;
-for the complete concealed lifecycle it is **7.66x**. These comparisons
+The ratio of medians for conversion-stage cost vs BB Sign+Verify is **5.39x**;
+for the complete concealed lifecycle it is **5.47x**. These comparisons
 perform different functionality and must be read with the timing boundaries
 above. They are local measurements, not paper numbers or optimized-backend
-performance predictions.
+performance predictions. CVerify costs **2.22x** a plain BB Verify.
 
-Results: [raw samples](../bench/results/2026-10-30/raw.csv),
-[summary](../bench/results/2026-10-30/summary.csv),
-[metadata](../bench/results/2026-10-30/metadata.json),
-[timings](../bench/results/2026-10-30/timings.png),
-[sizes](../bench/results/2026-10-30/sizes.png), plus SVG versions.
+**Re-run note (2026-10-31).** The first Part C snapshot (`2026-10-30`, still
+in the repository history) predates Part A's verifier optimisation and was
+taken on a different machine (Intel64 Family 6 Model 170, Python 3.9.23), so
+the two snapshots are *not* a controlled before/after comparison; the
+optimisation's own effect was measured on one machine (single `cverify`
+3.8 s -> 2.3 s, see `SECURITY_ARGUMENT.md` §5). The old numbers were:
+CVerify 3943.954 ms, Decom 345.626 ms, Convert+CVerify 7716.062 ms, full
+workflow 8064.135 ms (ratios 7.33x / 7.66x). This snapshot's repository
+revision is recorded in its `metadata.json`.
+
+Results: [raw samples](../bench/results/2026-10-31/raw.csv),
+[summary](../bench/results/2026-10-31/summary.csv),
+[metadata](../bench/results/2026-10-31/metadata.json),
+[timings](../bench/results/2026-10-31/timings.png),
+[sizes](../bench/results/2026-10-31/sizes.png), plus SVG versions.
 The 160 raw rows (8 operations/workflows x 20 trials), per-trial totals and
 benchmark source hash were independently checked. Both charts were visually
 inspected. The dated snapshot is included on the delivery branch so these

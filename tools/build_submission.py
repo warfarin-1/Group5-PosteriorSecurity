@@ -23,7 +23,7 @@ FORBIDDEN = {".git", ".venv", "venv", "__pycache__", ".pytest_cache", ".aws", ".
 def selected_files():
     paths = [ROOT / name for name in ROOT_FILES]
     paths += [ROOT / "bench/run_bench_concealed.py", ROOT / "bench/plot_results.py"]
-    for folder in TEXT_DIRS + ("bench/results/2026-10-30",):
+    for folder in TEXT_DIRS + ("bench/results/2026-10-31",):
         paths.extend(p for p in (ROOT / folder).rglob("*") if p.is_file() and p.suffix.lower() in EXTENSIONS)
     result = []
     for p in sorted(set(paths)):

@@ -102,7 +102,7 @@ Expected results: pytest reports passing tests; the benchmark writes
 `raw.csv`, `summary.csv`, `metadata.json`; plotting adds PNG/SVG timing
 and size charts. A full benchmark can take several minutes. New generated
 directories under `bench/results/` are ignored by Git; the measured
-`bench/results/2026-10-30/` snapshot is explicitly tracked for Part C.
+`bench/results/2026-10-31/` snapshot is explicitly tracked for Part C.
 Preserve the intended result directory when preparing the final evaluation
 archive. Never include `.venv` or private keys.
 

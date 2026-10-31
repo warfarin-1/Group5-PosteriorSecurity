@@ -1,0 +1,25 @@
+{
+  "recorded_utc": "2026-10-31T08:15:02.930238+00:00",
+  "python": "3.9.13 (main, Aug 25 2022, 23:51:50) [MSC v.1916 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "processor": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "py_ecc": "8.0.0",
+  "git_head": "e734d5511312364bbb00344d47f1e5a30555faf4",
+  "git_dirty": false,
+  "repeats": 20,
+  "warmup": 1,
+  "sizes_bytes": {
+    "bb_signature_payload": 80,
+    "proof": 2404,
+    "concealed_signature": 2504,
+    "crs": 580,
+    "public_parameters": 680,
+    "opening_scalar": 32
+  },
+  "quantiles": "linear interpolation at (n-1)*q",
+  "timing_clock": "perf_counter_ns",
+  "benchmark_script_sha256": "f4cee455207dea0827a67b73914df21d77db9ba3bc90b9e826363ce407f529c5",
+  "scope": "sequential single-process public APIs; setup/keygen/encoding excluded",
+  "comparisons": "convert+cverify excludes original signing; full_concealed includes signing and opening",
+  "bb_size": "48-byte compressed G1 + 32-byte scalar payload; no BB wire API or tag"
+}
