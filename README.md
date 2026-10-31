@@ -30,8 +30,11 @@ Implemented so far:
 - `tools/build_submission.py` — allowlisted source ZIP and SHA-256 manifest
 - `presentation/` and `submission/` — editable slide skeleton, demo runbook, Q&A, cover worksheet and final checklist
 
-Remaining team work includes A's GS simulator/security review and optional
-optimization, and final report/coversheet/slides review, rehearsal and upload.
+- `tests/test_gs_simulator.py` — hiding-CRS trapdoor simulator: witness-free proofs of the concealed relation (and of a false toy statement) verify under a hiding CRS, fail under a binding CRS; evidence for the ZK argument, not a proof
+
+- [`docs/SECURITY_ARGUMENT.md`](docs/SECURITY_ARGUMENT.md) — hiding/unforgeability argument, the integer-extraction gap, trusted-setup caveats, verifier optimisation notes
+
+Remaining team work is the final report/coversheet/slides review, rehearsal and upload.
 Tests provide engineering evidence, not a full cryptographic security proof.
 
 ## Scope
@@ -57,6 +60,21 @@ submission/          # cover fields and review checklist
 ```
 
 ## Run and reproduce
+
+### Environment requirements
+
+- Python **3.9+** (tested: 3.9.13, Windows 11); no Rust, C compiler or GPU needed.
+- Pinned packages in `requirements.txt`: `py-ecc==8.0.0`, `pytest==8.4.2`,
+  `pytest-benchmark==5.2.3`, `matplotlib==3.9.4`, `numpy==2.0.2`.
+- Use a **fresh virtual environment**; installing into a shared Conda/base
+  environment upgrades numpy and can break unrelated packages (scipy, numba).
+- Pure-Python pairings are slow: full `pytest` takes ~5 min, one `cverify` ~2.3 s.
+
+```powershell
+py -3.9 -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe -m pytest -q
+```
 
 From the repository root in PowerShell, using the existing project environment:
 

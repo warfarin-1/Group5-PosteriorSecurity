@@ -23,7 +23,8 @@ the older local planning dates. No submission site has been accessed here.
 - [ ] Transfer the Markdown slide skeleton into the team's slide template
 - [ ] Fill speaker names and the confirmed presentation/rehearsal schedule
 - [ ] Rehearse the timed live demo and fallback; optionally record a video
-- [ ] Resolve A's simulator/security-review items or disclose them accurately
+- [x] GS simulator test added (`tests/test_gs_simulator.py`)
+- [x] A's review + verifier optimisation done; disclose the extraction gap in `docs/SECURITY_ARGUMENT.md` §3 in the report
 - [ ] Recheck the actual portal's deadline, file rules and required file names
 - [ ] Run final tests for the exact submitted revision and retain the report
 - [ ] Inspect the generated ZIP/manifest and upload only after team review

@@ -35,6 +35,7 @@ from py_ecc.optimized_bls12_381 import (
     is_inf as _is_inf,
     is_on_curve as _is_on_curve,
     multiply as _multiply,
+    normalize as _normalize,
     neg as _neg,
     pairing as _pairing,
 )
@@ -113,7 +114,8 @@ def scalar_mul(point, scalar: int):
     Works for G1 or G2 points; py_ecc dispatches on the point's field.
     `scalar` is reduced mod ORDER first, so callers don't need to.
     """
-    return _multiply(point, scalar % ORDER)
+    k = scalar % ORDER
+    return point if k == 1 else _multiply(point, k)
 
 
 def neg(point):
@@ -126,6 +128,42 @@ def points_equal(p, q) -> bool:
     return _eq(p, q)
 
 
+_SUBGROUP_CACHE_MAX = 4096
+_subgroup_cache = {}
+
+
+def affine_key(point):
+    """Hashable canonical form of a G1/G2 point (equal points, equal keys)."""
+    if _is_inf(point):
+        return None
+    return tuple(
+        tuple(c.coeffs) if hasattr(c, "coeffs") else c.n for c in _normalize(point)[:2]
+    ) + (len(point[0].coeffs) if hasattr(point[0], "coeffs") else 1,)
+
+
+def _in_subgroup(point, b) -> bool:
+    """On-curve + order-p check, memoised on the affine coordinates.
+
+    Verification re-checks the same public points (CRS, keys, parameters)
+    on every call and several times within one call; each check is a full
+    scalar multiplication, so remembering successful and failed results is
+    a pure speed-up (the result depends only on the point's value).
+    """
+    if not _is_on_curve(point, b):
+        return False
+    try:
+        key = (b is _b, affine_key(point))
+    except (TypeError, AttributeError, ValueError):
+        return _is_inf(_multiply(point, _curve_order))
+    hit = _subgroup_cache.get(key)
+    if hit is None:
+        hit = _is_inf(_multiply(point, _curve_order))
+        if len(_subgroup_cache) >= _SUBGROUP_CACHE_MAX:
+            _subgroup_cache.clear()
+        _subgroup_cache[key] = hit
+    return hit
+
+
 def is_valid_g1(point) -> bool:
     """True iff `point` is on the G1 curve and in the prime-order subgroup.
 
@@ -133,12 +171,12 @@ def is_valid_g1(point) -> bool:
     (e.g. a proof) before pairing it: BLS12-381 G1 has a non-trivial
     cofactor, so an on-curve point can lie outside the order-p subgroup.
     """
-    return _is_on_curve(point, _b) and _is_inf(_multiply(point, _curve_order))
+    return _in_subgroup(point, _b)
 
 
 def is_valid_g2(point) -> bool:
     """G2 analogue of `is_valid_g1`."""
-    return _is_on_curve(point, _b2) and _is_inf(_multiply(point, _curve_order))
+    return _in_subgroup(point, _b2)
 
 
 def multi_pairing_is_one(pairs) -> bool:
