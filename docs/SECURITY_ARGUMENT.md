@@ -159,8 +159,8 @@ the representations of `xt, xr` in terms of the oracle responses
   (bilinearity) before the Miller loops, and subgroup checks are memoised on
   affine coordinates (they depend only on the point's value). Single
   `cverify` on the development machine: about 3.8 s -> 2.3 s (single run,
-  warm parameters; earlier benchmark charts in `docs/evidence` predate this
-  change and were not regenerated).
+  warm parameters). The benchmark snapshot `bench/results/2026-10-31/` was
+  re-run after this change (n=20: CVerify median 2315 ms, 2.22x BB Verify).
 * Not done: faster G2 subgroup test (endomorphism-based), fixed-base
   precomputation; they would help further but add risk without a
   reference implementation to cross-check.

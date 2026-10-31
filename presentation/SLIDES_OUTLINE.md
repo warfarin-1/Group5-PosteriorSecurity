@@ -84,7 +84,7 @@ Do not claim the absence of a plaintext field proves zero knowledge.
 On slide: n=20, one excluded warmup; median/IQR.
 BB Sign+Verify 1.052 s; Convert 3.777 s; CVerify 3.944 s; Decom 0.346 s.
 
-Notes: Insert `bench/results/2026-10-30/timings.png`. Full concealed workflow
+Notes: Insert `bench/results/2026-10-31/timings.png`. Full concealed workflow
 is 8.064 s. Setup/keygen/encoding are outside timed intervals; public API
 validation is included. Compare distinct functionality explicitly. Source:
 `docs/PART_C.md` and raw measurement snapshot. This is Python on this machine.
