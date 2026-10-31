@@ -43,6 +43,7 @@ from posterior.pairing import (
     ZERO_G2,
     add_g1,
     add_g2,
+    affine_key,
     is_valid_g1,
     is_valid_g2,
     multi_pairing_is_one,
@@ -229,6 +230,13 @@ def verify_ppes(
     of each matrix, random per-equation weight), so the whole batch is a
     single product of pairings. A false statement slips through with
     probability O(1/p) over the verifier's randomness.
+
+    Speed-ups (no change of interface or soundness): alpha = (a, 1) and
+    beta = (b, 1) -- alpha^T M beta is then a non-zero polynomial of degree
+    <= 1 in each of a, b whenever M != 0, so Schwartz-Zippel still gives
+    error <= 2/p per matrix entry-combination while saving half of the
+    projection scalar multiplications; and pairing terms sharing the same
+    G2 point are merged (bilinearity) before the Miller loops.
     """
     if len(eqs) != len(proofs):
         return False
@@ -241,8 +249,8 @@ def verify_ppes(
     ):
         return False
 
-    alpha = (random_scalar(), random_scalar())
-    beta = (random_scalar(), random_scalar())
+    alpha = (random_scalar(), 1)
+    beta = (random_scalar(), 1)
 
     def pg1(vec: Vec1):  # alpha . vec  (G1)
         return add_g1(scalar_mul(vec[0], alpha[0]), scalar_mul(vec[1], alpha[1]))
@@ -268,9 +276,9 @@ def verify_ppes(
         # LHS: sum_j F(iota1 A_j, d_j) + sum_i F(c_i, iota2 B_i)
         #      + sum_ij gamma_ij F(c_i, d_j), projected by (alpha, beta).
         for j in range(eq.ny):
-            lhs(scalar_mul(eq.A[j], alpha[1]), proj_d[j])
+            lhs(eq.A[j], proj_d[j])
         for i in range(eq.nx):
-            lhs(proj_c[i], scalar_mul(eq.B[i], beta[1]))
+            lhs(proj_c[i], eq.B[i])
             for j in range(eq.ny):
                 g = eq.gamma[i][j] % ORDER
                 if g:
@@ -278,10 +286,24 @@ def verify_ppes(
         # RHS: iota_T(target) + sum_k F(u_k, pi_k) + sum_l F(theta_l, v_l);
         # move to the left by negating the G1 side.
         for p1, q2 in eq.target:
-            pairs.append((neg(scalar_mul(p1, rho * alpha[1] * beta[1])), q2))
+            pairs.append((neg(scalar_mul(p1, rho)), q2))
         for k in range(2):
             pairs.append((neg(scalar_mul(proj_u[k], rho)), pg2(pf.pi[k])))
         for l in range(2):
             pairs.append((neg(scalar_mul(pg1(pf.theta[l]), rho)), proj_v[l]))
 
-    return multi_pairing_is_one(pairs)
+    return multi_pairing_is_one(_merge_by_g2(pairs))
+
+
+def _merge_by_g2(pairs):
+    """prod e(P_i, Q) = e(sum P_i, Q): one Miller loop per distinct Q."""
+    merged = {}
+    for p1, q2 in pairs:
+        key = affine_key(q2)
+        if key is None:  # identity in G2 contributes 1
+            continue
+        if key in merged:
+            merged[key] = (add_g1(merged[key][0], p1), q2)
+        else:
+            merged[key] = (p1, q2)
+    return list(merged.values())

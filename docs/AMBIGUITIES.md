@@ -24,7 +24,8 @@ historical discussions. It supplements the local plan and `PART_B.md`.
 
 ## Items still outside C's completed work
 
-- A: GS simulator-based tests, proof/reduction review, trusted-setup and
+- A: done -- see `SECURITY_ARGUMENT.md` and `tests/test_gs_simulator.py`.
+  Original scope: GS simulator-based tests, proof/reduction review, trusted-setup and
   extraction caveats, optional verifier optimization. Current parameter
   checks cannot establish honest generation or trapdoor destruction.
 - D: CBDC demo, release packaging and presentation. This implementation does
