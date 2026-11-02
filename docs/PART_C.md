@@ -133,4 +133,4 @@ message hiding. A's GS simulator/security review remains separate. D's demo,
 Incognito background experiment and final packaging remain separate.
 
 AI assisted Part C implementation, tests, evaluation and documentation on
-2026-10-30; execution evidence is recorded in the local `process.md`.
+2026-10-30; execution evidence is in `bench/results/` and `docs/evidence/`.

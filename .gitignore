@@ -11,3 +11,13 @@ venv/
 
 # Benchmark outputs (regenerate locally; keep repo lean)
 bench/results/
+
+# Internal / not for the public repo
+复现计划.md
+presentation/QA_*.md
+presentation/SPEECH_FLOW.*
+presentation/*.pptx
+submission/
+docs/INCOGNITO_REPO_NOTES.md
+.idea/
+.venv/

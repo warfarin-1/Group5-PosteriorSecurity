@@ -34,8 +34,7 @@ assembly/serialization/security smoke tests and integration documentation;
 Part C supplementary tests, benchmark/plot scripts, measurements and mapping/
 decision notes; and Part D demo, CLI tests, reference benchmark execution,
 packaging script, documentation, slide skeleton and Q&A preparation.
-Specific execution evidence and dates are retained in the local progress
-record. Git commit authorship is not a claim that every line was manually
+Specific execution evidence is retained in `docs/evidence/` and the Git history. Git commit authorship is not a claim that every line was manually
 written by that person. Members must review the code, cite assistance using
 the current unit policy and be able to explain what they submit.
 

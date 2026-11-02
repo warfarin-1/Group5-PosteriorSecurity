@@ -14,8 +14,7 @@ push target. No portal submission or merge into `main` is performed.
 | Prior-run fallback | `docs/evidence/demo-transcript.txt`, `demo-report.json`; no private key or opening is persisted |
 | External Incognito | official `bench_incognito` completed across 6 ring sizes and 2 operations; `INCOGNITO_REFERENCE.md`, raw JSON and summary CSV |
 | Packaging | `tools/build_submission.py`: allowlisted ZIP, internal byte counts/hashes, CRC/content verification; no environment/toolchains/Git metadata/local process file |
-| Presentation preparation | `presentation/SLIDES_OUTLINE.md`: 20-minute slide skeleton and speaker notes; `DEMO_RUNBOOK.md`: 4-minute live/fallback plan; `QA_REHEARSAL.md`: 22 question anchors and rehearsal worksheet |
-| Cover and checklist | `submission/COVER_DETAILS.md` and `CHECKLIST.md`; member details/date left TO FILL as explicitly requested |
+| Presentation preparation | `presentation/DEMO_RUNBOOK.md`: 3.5-minute live/fallback demo plan |
 | Provenance | `PROVENANCE.md`, root README, reference revision and experiment settings |
 
 The slide skeleton is **Markdown, not an exported PPTX**. The presentation
@@ -71,11 +70,8 @@ and expected pass/reject outcomes are stable.
 ## Team completion items
 
 The source artifact is a **review copy**. The final report, official
-CoverSheet/member declarations, final PPTX styling, actual rehearsal,
-optional backup video and portal submission remain for the team. Member
-names, IDs and confirmed dates remain TO FILL by user instruction. A's
-simulator/security review remains a separate task. None of these activities
-is falsely marked as performed. See `submission/CHECKLIST.md`.
+CoverSheet/member declarations, report, slides, rehearsal and portal
+submission are handled outside this repository.
 
 AI assisted Part D demo/tests, reference execution, packaging and preparation
-documents on 2026-10-30. Local `process.md` records execution and branch status.
+documents on 2026-10-30. Execution evidence is in `docs/evidence/`.

@@ -10,8 +10,6 @@ FIT5163 Assignment 2 (Programming Option) — a reproduction/implementation proj
 
 - [`PAPER_MAP.md`](./PAPER_MAP.md) — background reading notes on the Incognito Signature construction (not implemented, reference only)
 
-(Team-internal planning/progress documents, not part of the final submission, are kept elsewhere and are not referenced from this file.)
-
 Implemented so far:
 - `src/posterior/pairing.py` — thin wrapper over `py_ecc`'s BLS12-381 backend (group ops, pairing, scalar/hash-to-scalar/hash-to-G2 helpers), with bilinearity/identity tests
 - `src/posterior/boneh_boyen.py` — standard Boneh-Boyen sign/verify (§5.3's base scheme; also our no-privacy performance baseline), with correctness + tamper tests
@@ -28,13 +26,13 @@ Implemented so far:
 - `demo/cbdc_concealed.py` — wallet/bank/verifier/reveal illustration with rejection paths
 - [`docs/PART_D.md`](docs/PART_D.md) — verified demo, external reference experiment and packaging notes
 - `tools/build_submission.py` — allowlisted source ZIP and SHA-256 manifest
-- `presentation/` and `submission/` — editable slide skeleton, demo runbook, Q&A, cover worksheet and final checklist
+- [`docs/TEAM_AND_PLAN.md`](docs/TEAM_AND_PLAN.md) — team roles, scope decision, milestones
+- `presentation/DEMO_RUNBOOK.md` — demo runbook with recorded-output fallback
 
 - `tests/test_gs_simulator.py` — hiding-CRS trapdoor simulator: witness-free proofs of the concealed relation (and of a false toy statement) verify under a hiding CRS, fail under a binding CRS; evidence for the ZK argument, not a proof
 
 - [`docs/SECURITY_ARGUMENT.md`](docs/SECURITY_ARGUMENT.md) — hiding/unforgeability argument, the integer-extraction gap, trusted-setup caveats, verifier optimisation notes
 
-Remaining team work is the final report/coversheet/slides review, rehearsal and upload.
 Tests provide engineering evidence, not a full cryptographic security proof.
 
 ## Scope
@@ -55,8 +53,7 @@ tests/                # correctness, security-property, and edge-case tests
 bench/                # performance benchmarks and plots
 docs/                # paper-to-code mapping, ambiguity/decision notes
 tools/               # source packaging and external result collection
-presentation/        # slide skeleton, demo runbook and Q&A preparation
-submission/          # cover fields and review checklist
+presentation/        # demo runbook
 ```
 
 ## Run and reproduce
@@ -114,9 +111,8 @@ archive. Never include `.venv` or private keys.
 
 This writes `../deliverables/Group5-PosteriorSecurity-source.zip`, verifies
 archive contents against its SHA-256 manifest, and excludes environments,
-toolchains, caches, Git metadata and internal notes. It is a review copy:
-complete the [submission checklist](submission/CHECKLIST.md) and official
-CoverSheet before any upload. Member information remains TO FILL by request.
+toolchains, caches, Git metadata and internal notes. It is a review copy
+of the source package.
 
 Rust is not needed for this Python project. The separate official Incognito
 reference benchmark was run unchanged; its source revision, raw measurements

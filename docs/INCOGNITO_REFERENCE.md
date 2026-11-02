@@ -22,7 +22,7 @@ commands or network configuration changes were made on this Windows machine.
 Environment: Windows, Intel64 Family 6 Model 170; Rust **1.85.1**,
 `x86_64-pc-windows-gnu`, optimized bench profile, Criterion 0.5.1 from the
 existing lockfile. Rustup was downloaded from the official static server,
-SHA-256 checked and installed under `D:\5163 Ass2\.part-d-tools`; both
+SHA-256 checked and installed into a project-local, isolated tools directory; both
 RUSTUP_HOME/CARGO_HOME and build output are isolated there. System PATH was
 not changed. See the [Rust installation guide](https://rust-lang.org/tools/install/)
 and [rustup installation options](https://rust-lang.github.io/rustup/installation/other.html).
