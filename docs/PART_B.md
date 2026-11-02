@@ -1,6 +1,6 @@
 # Part B: concealed signatures and wire format
 
-The implementation follows the 2026-10-09 assignment in `复现计划.md` §8.
+The implementation follows the team's internal task split (Part A–D).
 It uses A's existing Groth–Sahai proof without changing its interface.
 
 ## API
@@ -108,7 +108,7 @@ tests or a security proof. Trusted setup and the inherited group-element
 and `zk_proof.py`.
 
 AI assisted the Part B implementation, tests and this integration note on
-2026-10-17; the local `process.md` records changes and execution evidence.
+2026-10-17; execution evidence is in the tests and `docs/evidence/`.
 
 ## Branch delivery record (2026-10-30)
 

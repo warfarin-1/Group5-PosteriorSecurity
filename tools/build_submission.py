@@ -2,7 +2,7 @@
 
 Never packages a virtual environment, Git metadata, local process records,
 Rust toolchains, credentials, private openings or arbitrary workspace files.
-Inspect the included submission checklist before uploading anything.
+Inspect the archive and manifest before uploading anything.
 """
 
 import argparse
@@ -15,7 +15,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 ROOT_FILES = ("README.md", "requirements.txt", "pyproject.toml", "PAPER_MAP.md")
-TEXT_DIRS = ("src/posterior", "tests", "demo", "tools", "docs", "presentation", "submission")
+TEXT_DIRS = ("src/posterior", "tests", "demo", "tools", "docs", "presentation")
 EXTENSIONS = {".py", ".md", ".json", ".csv", ".txt", ".png", ".svg", ".pptx", ".pdf"}
 FORBIDDEN = {".git", ".venv", "venv", "__pycache__", ".pytest_cache", ".aws", ".codex", ".vscode", "node_modules"}
 
@@ -60,7 +60,7 @@ def main():
             if hashlib.sha256(payload).hexdigest() != row["sha256"]:
                 raise RuntimeError(f"manifest mismatch: {row['path']}")
     print(f"Verified {len(paths)} files: {args.output}")
-    print("Review copy only: see submission/CHECKLIST.md before any upload.")
+    print("Review copy only: inspect the archive and manifest before any upload.")
 
 
 if __name__ == "__main__":
